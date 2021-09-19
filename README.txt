@@ -1,65 +1,10 @@
 READ ME FILE for X-Ray Diagnostics Triggering system ofr DLS Diagnostics Team
 Created by Summer Student 2021, Codrutza Dragu, University of Oxford
 
-''' This software package is made to communicate with TetrAMM and MantaCam software via the EPICS pvs '''
+The hardware and software elements of the trigger are in their respective foler. A PDF help guide to both is located in the main directory, with the order of the GUI execution and what each file does. A general overview of the project is as given below:
 
-Pre-Requisites:
-    Virtual Environment witht the fillowing pipinstalls:
-    - [packages]
-        h5py = "*"
-        cothread = "*"
-        matplotlib = "*"
-        pyqt5 = "*"
-        scipy = "*"
-        mpld3 = "*"
+This project is centered around helping the Diagnostics team acquire better data during their beamline vibrations analysis. This is done through a two-fold system, consisting of a ‘button-press’ hardware element to synchronously trigger the diagnostics hardware on the beamline, and a software package to fix any issues during data acquisition, and provide a user-friendly analysis interface. The system was tested on the i18 beamline in late June, and approximately 7hours worth of synchronous data was acquired and analyzed. The graphs produced at the end of the experiment indicate possibly uncorrelated vibrations coming from the horizontal focusing mirrors closest to the sample.
 
-    - [python version]
-        #python_version = "3.7"
+An issue many beamlines face, and one that affects the quality of the data acquired on the beamline, is if there are significant unwanted vibration present during beam time. These vibrations could be internal and come from the optical elements along the beamline, or from elements in the ring. They could even be external and come from overhead motion or from the air conditioning system. Identifying the source of unwanted vibration is critical in maintaining the quality of the beamline and the stability of the beam. Use of the diagnostics hardware present on the beamline allows data to be taken at beamline positions, and compared to determine whether there is uncorrelated motion present between the different acquisition devices, and if so, then further identification of the component causing the vibration. To accurately determine non-correlated motion, data should be acquired synchronously across all the hardware. The current limitation is that the EPICS interface controlling the hardware allows only manual acquisition for each hardware, and has no way to coordinate grabbing data from multiple hardware at the same time. The scope of this project is to produce a physical trigger system to control the hardware, and a software package that allows the trigger experiment to be monitored and has post-experiment Fourier analysis capabilities. 
 
-    Access to EPICS gui and IOcs for the MantaCam and the TetrAMM
-
-Files in this package:
-    Main files to be run from Terminal:
-        - Main_Experiment_Set_Up.py
-            This file runs the secquence of set up GUIs in order. 
-            It calls Set_Up_Main, Set_Up_TetrAMM,Set_Up_Camera, Set_Up_Diagnostics_Hybrid, Set_Up_Beamline, Set_Up_Beamline_Schematic GUI packages#
-            This file also imports the TertAMM and MantaCam object classes
-
-        - Main_Data_Converter_Set_Up.py
-            This file runs the script to convert the hdf5 files into .mat files for future anlaysis
-            It calls Set_Up_DataConverter
-
-        - Main_Analysis_Set_Up.py
-            This file runs the script to produce the analysis gui and perform the different kinds of anlaysis required
-            It calls Set_Up_Analysis_GUI
-
-    Set_Up_GUI files:
-        - Set_Up_Main.py
-            This script generates a GUI to allow the users to select the harware that they want to use on the beamaline
-        
-        - Set_Up_TetrAMM.py 
-            This script sets up the TetrAMM objects and the HDF5 portion of the GUI
-
-        - Set_Up_MantaCam.py
-            This script sets up the MantaCam objects and the HDF5 portion of the GUI
-
-        - Set_Up_Beamline.py
-            This script allows you to choose the beamline that you want to use. The pv of the topup for any beamline is already displayed on the GUI#
-
-        - Set_Up_Beamline_Schematic.py
-            This script allows you to drag and drop hardware along the beamline positions available
-
-        - Set_Up_Diagnostics_Hybrid.py
-            This script manages the experiment part of the triggering. It is an updating interface that displays any errors with the hardware and file saving, 
-            and also allows you to start the hardware's HDF acquire feature, stop it, reset the hardware and interface, and produce a metadata mat file
-            which is needed for upload in the anlaysis GUIs
-
-        - Set_Up_DataConverter.py
-            This script converts the hdf5 files into .mat files for easier data access after the experimetn is done. 
-            It already performs stitching and 2D gaussian fitting, but does not perform the anlaysis yet
-
-        - Set_Up_Analysis_Gui.py
-            This script uses the Info.mat file produced during the experiment and the .mat files created from the Data Converter to produce any graph that the user wants
-    
-
-
+More information and the results of the data anlysis from the i18 beamline experiemnt is available in the SummerStudent 2021 report document
